@@ -3,4 +3,4 @@ ITrix an National level technical symposium conducted by Department of Informati
 
 ## Credits
 
-Design - [https://twitter.com/ShajanSheriff](Joker) | Developer - [https://www.facebook.com/PrathapBPTP](Prathap)
+Design - [Joker :)](https://twitter.com/ShajanSheriff) | Developer - [Prathap](https://www.facebook.com/PrathapBPTP)
