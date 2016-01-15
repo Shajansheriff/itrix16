@@ -64,6 +64,7 @@ function sho($element) {
 $jash = $('#jash');
 
 printPrompt();
+
 hid($('.v-loading-container'));
 
 //hid($jash);
@@ -271,5 +272,15 @@ function manipulateCmd(cmdSeq){
 
 /* manipulate cmd -- Ends*/
 
+// var workshop;
+// workshop.title = 'hello';
+// workshop.desc = "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur sequi nobis soluta dolores, deleniti reprehenderit assumenda delectus, non recusandae eius? Vero veritatis laborum eaque eos quia inventore ipsum voluptate veniam."
+// workshop.time = '12-15-16';
+/*workshop {
+  title: 'hello',
+  desc: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officiis, quod quos laboriosam nisi fuga aspernatur voluptates, explicabo delectus, odio in saepe reiciendis temporibus, itaque rerum error sequi mollitia nobis doloribus.',
+  time: '16-01-2016'
+
+}*/
 
 
