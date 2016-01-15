@@ -1,0 +1,244 @@
+@font-face {
+  font-family: dos;
+  src: url(../fonts/dos.ttf);
+}
+
+
+body{
+  background-color: #000000;
+}
+
+a{
+  color: #fff;
+}
+
+.binary-logo {
+  opacity: 0;
+  width: auto;
+  overflow-x: hidden !important;
+  position: fixed;
+  top: 11%;
+  left: 30%;
+}
+
+.loading-list {
+  margin: 30px 10px 10px;
+  position: relative;
+  /*list-style: none;*/
+  list-style-image: url('../img/slash.png');
+}
+
+#v-loading-content {
+  display: none;
+}
+
+.v-loading-container {
+  position: absolute;
+  display: list-item;
+    width: 80%;
+    left: 20px;
+    font-size: 23px;
+    /*bottom: 90px;*/
+    right: 100px;
+    overflow: hidden;
+    color: #FFF;
+    font-family: dos;
+    height: 70%;
+
+}
+
+.h-loading-container {
+  width: 66%;
+  left: 17%;
+  height: 40px;
+  background-color: grey;
+  position: fixed;
+  bottom: 80px;
+}
+
+.h-loading-container > p {
+  margin-top: -45px;
+  font-family: dos;
+  font-size: 27px;
+  text-align: center;
+  color: #505254;
+  position: relative;
+
+}
+
+.blinker {
+  opacity: 0;
+  -webkit-animation-name: blinker; /* Chrome, Safari, Opera */
+  -webkit-animation-duration: 1.5s; /* Chrome, Safari, Opera */
+    animation-name: blinker;
+    animation-duration: 1.5s;
+  -webkit-animation-iteration-count: infinite;
+    animation-iteration-count:infinite;
+}
+
+@keyframes blinker {
+  0%    {opacity: 0;}
+
+  50%   {opacity: 1;}
+  100%  {opacity: 0;}
+}
+
+@-webkit-keyframes blinker{
+  0%    {opacity: 0;}
+  50%   {opacity: 1;}
+  100%  {opacity: 0;}
+}
+
+.h-loading-content {
+  display: none;
+}
+.h-loading-fill {
+  width: 0;
+  position: absolute;
+  background-color: silver;
+  height: inherit;
+  -webkit-animation-name: fill; /* Chrome, Safari, Opera */
+  -webkit-animation-duration: 7s; /* Chrome, Safari, Opera */
+    animation-name: fill;
+    animation-duration: 7s;
+  -webkit-animation-iteration-count: 1;
+    animation-iteration-count: 1;
+  -webkit-animation-fill-mode: forwards;
+    animation-fill-mode: forwards;
+  -webkit-animation-timing-function: linear;
+    animation-timing-function: linear;
+}
+
+.h-loading-txt {
+  color: white;
+  position: relative;
+  font-size: 18px;
+  font-family: dos;
+  margin-top: -4px;
+  vertical-align:middle;
+  text-align: center;
+}
+
+/* Chrome, Safari, Opera */
+@-webkit-keyframes fill {
+   0% {width: 0%;}
+   10% {width: 10%;}
+   20% {width: 15%;}
+   30% {width: 30%;}
+   40% {width: 30%;}
+   45% {width: 40%;}
+   50% {width: 50%;}
+   60% {width: 60%;}
+   65% {width: 60%;}
+   70% {width: 65%;}
+   75% {width: 70%;}
+   80% {width: 80%;}
+   90% {width: 90%;}
+   100% {width: 100%;}
+}
+
+/* Standard syntax */
+@keyframes fill {
+
+  0% {width: 0%;}
+  10% {width: 10%;}
+  20% {width: 15%;}
+  30% {width: 30%;}
+  40% {width: 30%;}
+  45% {width: 40%;}
+  50% {width: 50%;}
+  60% {width: 60%;}
+  65% {width: 60%;}
+  70% {width: 65%;}
+  75% {width: 70%;}
+  80% {width: 80%;}
+  90% {width: 90%;}
+  100% {width: 100%;}
+}
+/*::-webkit-scrollbar {
+    display: none;
+}*/
+
+
+
+
+
+
+/* Jash Start */
+
+.red {color: #ff0000}
+.blue { color: #2EABE2; }
+.blue2 { color: #66efd5; }
+.green { color: #6cc72c; }
+.orange { color: #fe9720; }
+.pink { color: #fa2772; }
+.pale { color: #e7db75; }
+.grey { color: #cfd0c2; }
+.grey2 { color: #76715e; }
+
+#jash {
+  color: #FFF;
+  font-family: dos;
+  font-size: 20px;
+  letter-spacing: 0.9px;
+  /*max-width: 74em;*/
+  margin-top: 10px;
+  margin-left: 5px;
+  position: relative;
+  display: block;
+}
+
+
+.jash-welcome p {
+  line-height: 1;
+  margin-bottom: 7px;
+}
+
+.cmd-container {
+  /*line-height: 0.8;*/
+}
+.cmd {
+  border: none;
+  background-color: #000;
+  outline: none;
+  color: #FFF;
+  width: 70%;
+}
+.cmd::focus {
+  border: none;
+  background-color: #000;
+  outline: none;
+}
+
+.cmd::active {
+  border: none;
+  background-color: #000;
+  outline: none;
+}
+
+
+
+/* jash End */
+
+
+
+
+/* workshop temp starts*/
+
+.workshop {
+  text-align: left;
+  vertical-align: text-top; 
+}
+
+.workshop tr  {
+   border: 1px #ffffff dashed; 
+}
+.workshop tr {
+  margin-bottom: 20px !important;
+  padding: 20px;
+}
+
+.workshop td {
+  padding: 10px;
+}
+/* workshop temp ends */
