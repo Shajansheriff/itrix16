@@ -1,5 +1,13 @@
+(function($){
+    $.fn.setCursorToTextEnd = function() {
+        var $initialVal = this.val();
+        this.val($initialVal);
+    };
+})(jQuery);
+
+
 var user = "guest";
-var whiteListCommands = [
+var whiteListCommands = [       // Array of valid commands
                   "itrix",
                   "event",
                   "workshop",
@@ -14,7 +22,7 @@ var whiteListCommands = [
                   "-s",
                   "-l"
                 ];
-var whiteListEvents = [
+var whiteListEvents = [        // Array of valid event names (Used to distinguish bewtween workshop name and event name.)
                   "gameofthrones",
                   "junkyardjunkies",
                   "waronroad",
@@ -22,19 +30,26 @@ var whiteListEvents = [
                   "jun",
                   "war"
                 ];
-var whiteListWorkshops = [
+var whiteListWorkshops = [    // Array of valid workshop names (Used to distinguish bewtween workshop name and event name.)
                   "ehacking",
                   "iot"
                 ]
-var cmdArray = [];
-var storedCmd = [];
+
+
+
+var cmdArray = [];  // Stores the chunks of single command. Eg: {0:'event',  1:'-d',  2:'gam'}
+
+var storedCmd = []; // Stores the set of all commands typed by the user under current session.
+var storedCmdIndex = -1; // The index of the command 
+
+
 function printPromptS(cmd){ // Convert input to span element
   var prompts = '<div class="cmd-container"><p>'+user+'@ITrix:~$ <span class="cmds">'+cmd+'</span></p></div>';
   $(".j-container").append(prompts);
 }
 
-function printPrompt(){
-  var prompt = '<div class="cmd-container"><p>'+user+'@ITrix:~$ <input type="text" id="cmd" onblur="this.focus()" class="cmd" maxlength="50" autofocus /></p></div>';
+function printPrompt(val){  // Display the command input field on the command window
+  var prompt = '<div class="cmd-container"><p>'+user+'@ITrix:~$ <input type="text" id="cmd" onblur="this.focus()" class="cmd" maxlength="50" value="'+val+'" autofocus /></p></div>';
   $(".j-container").append(prompt);
   $("#cmd").focus();
 }
@@ -44,8 +59,7 @@ function printError(error){
 }
 
 function printContent(content){
-  $(".j-container").append('<p class="reply-cmd">'+ content +'</p>');
-}
+  $(".j-container").append('<p class="reply-cmd">'+ content +'</p>'); }
         
       
 
@@ -63,7 +77,7 @@ function sho($element) {
 
 $jash = $('#jash');
 
-printPrompt();
+printPrompt("");
 
 hid($('.v-loading-container'));
 
@@ -134,10 +148,48 @@ $(".h-loading-fill")
       $(this).off(e);
     });
 
-$(window).on('keypress', function(event) {
+$(window).on('keydown', function(event) {
+ // $("#cmd").val($("#cmd").val().replace(/\s+/g,' ').trim());
+  if(event.keyCode == 9)
+  {
+      event.preventDefault();
+      var keySeq = $("#cmd").val();
+      var keyArray = keySeq.split(" ");
+      remPreTrix(keyArray);
+      var searchKey = new RegExp("^" +keyArray[keyArray.length - 1]);
+      if(keyArray.length == 1)
+        var resultArray  = $.grep(whiteListCommands, function(item){
+            return searchKey.test(item);
+        });
+
+      else if(keyArray.length == 3 && keyArray[0] == "event")
+        var resultArray  = $.grep(whiteListCommands.concat(whiteListEvents), function(item){
+            return searchKey.test(item);
+        });
+      else if(keyArray.length == 3 && keyArray[0] == "workshop")
+        var resultArray  = $.grep(whiteListCommands.concat(whiteListWorkshops), function(item){
+            return searchKey.test(item);
+        });
+      else return;
+
+      keyArray.pop();
+      if(resultArray.length == 1)
+          $("#cmd").val(keyArray.join(" ") + resultArray + " ");
+      else
+      {  
+          for($i = 0; $i < keyArray.length; $i++)
+            resultArray[$i] = '<span class="search-results">'+resultArray[$i]+"</span>";
+          storeCmd(keySeq);
+          $("#cmd").parents(".cmd-container").remove();
+          printPromptS(keySeq);
+          printContent(resultArray.join(""));
+          printPrompt(keySeq);
+          $("#cmd").setCursorToTextEnd();
+      }
+  }
   //event.preventDefault();
   test = '';
-
+  
   /*if (test != $('.h-loading-txt').text()) {
     $('.v-loading-container').css('opacity', '1');
   }
@@ -151,36 +203,58 @@ $(window).on('keypress', function(event) {
   }
 
   else*/
-  if(event.keyCode == 13)
+
+  if(event.keyCode != 13 && event.keyCode != 38 && event.keyCode != 40)
+    storedCmdIndex = storedCmd.length - 1;
+
+  else if(event.keyCode == 13)
   {
     var cmdSeq = $("#cmd").val();
     $("#cmd").parents(".cmd-container").remove();
     printPromptS(cmdSeq);
     if(!cmdSeq.length)
-      printPrompt();
+      printPrompt("");
     else{
       storeCmd(cmdSeq);
       manipulateCmd(cmdSeq.toLowerCase());
-      printPrompt();
+      printPrompt("");
     } 
-    
+  }
+
+  else if(event.keyCode == 38)
+  {
+      event.preventDefault();
+      if(storedCmdIndex > 0) $("#cmd").val(storedCmd[storedCmdIndex--]);
+      else if(storedCmdIndex == 0) $("#cmd").val(storedCmd[storedCmdIndex] );
+
+  }
+
+  else if(event.keyCode == 40)
+  {
+      event.preventDefault();
+      if(storedCmdIndex < storedCmd.length-1) $("#cmd").val(storedCmd[++storedCmdIndex]);
+      else if(storedCmdIndex == storedCmd.length-1)$("#cmd").val("");
+
   }
 
 
+    
 
 
 });
 
+// Function to populate storedCmd array with the command user typed.
 
-function storeCmd(cmdSeq)
+function storeCmd(cmdSeq)  
 {
     storedCmd.push(cmdSeq);
-
+    storedCmdIndex++;
 }
 
 
 
-// Function to check if all commands are in one of the three whiteList array
+// Function to check if all commands are in one of the three whiteList arrays
+
 function validateCmd(){ 
   if (cmdArray.length > 2)
   {   
@@ -193,9 +267,9 @@ function validateCmd(){
       cmdArray = [ccmd, opt, args];
   }
   for(var i = 0 , len = cmdArray.length; i < len; i++){  // Iterates thru' every element in array
-     if($.inArray(cmdArray[i] , whiteListCommands) == -1) // if element not present in whiteList array, return false
-      if($.inArray(cmdArray[i] , whiteListEvents) == -1) // if element not present in whiteList array, return false
-        if($.inArray(cmdArray[i] , whiteListWorkshops) == -1)  // if element not present in whiteList array, return false
+     if($.inArray(cmdArray[i] , whiteListCommands) == -1) // if element is not a valid command, return false
+      if($.inArray(cmdArray[i] , whiteListEvents) == -1) // if element is not a valid event name, return false
+        if($.inArray(cmdArray[i] , whiteListWorkshops) == -1)  // if elementis not a valid workshop name, return false
           return false;
   }
   return true;
@@ -203,16 +277,16 @@ function validateCmd(){
 
 
 // Function to remove "itrix" command in the beginning of command array
-function remPreTrix(){  
-  if(cmdArray[0] == "itrix") 
-    cmdArray.shift();  // To remove first element in the array.
+function remPreTrix(array){  
+  if(array[0] == "itrix") 
+    array.shift();  // To remove first element in the array.
 }
 
 
 // Function to check if the cmd has correct pattern
-//  return -1 if not valid pattern
+// return -1 if not valid pattern
 // return -2 if not valid event/workshop name
-//  return command name if valid
+// return command name if valid
 function validatePattern(){ 
     var ccmd = cmdArray[0];
     switch(ccmd)
@@ -262,7 +336,7 @@ function manipulateCmd(cmdSeq){
     cmdArray = cmdSeq.split(" ");
     if(!validateCmd())
       return printError("Invalid Command!");
-    remPreTrix();
+    remPreTrix(cmdArray);
     var ccmd = validatePattern(); 
     if(ccmd == -1)  return printError("Invalid Command!");
     else if(ccmd == -2) return printError("Invalid "+ cmdArray[0] + " name");
@@ -282,5 +356,6 @@ function manipulateCmd(cmdSeq){
   time: '16-01-2016'
 
 }*/
+
 
 
