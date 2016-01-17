@@ -188,7 +188,9 @@ a{
   display: block;
 }
 
-
+p {
+  margin-bottom: 5px;
+}
 .jash-welcome p {
   line-height: 1;
   margin-bottom: 7px;
@@ -203,6 +205,8 @@ a{
   outline: none;
   color: #FFF;
   width: 70%;
+  height: 30px;
+  letter-spacing: 0.9px;
 }
 .cmd::focus {
   border: none;
@@ -216,6 +220,9 @@ a{
   outline: none;
 }
 
+.j-container-temp {
+  display: none;
+}
 
 
 /* jash End */

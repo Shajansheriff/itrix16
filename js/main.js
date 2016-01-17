@@ -44,11 +44,27 @@ function printError(error){
 }
 
 function printContent(content){
-  $(".j-container").append('<p class="reply-cmd">'+ content +'</p>');
-}
-        
-      
 
+  $.get('templates/_workshop.html', function(data) {
+    $('.j-container-temp').append(data).delay(10, workshopManipulation());
+    
+  });
+
+  // $(".j-container").append('<p class="reply-cmd">'+ content +'</p>');
+  
+}
+
+function workshopManipulation (argument) {
+    $('.workshop-title').text(workshop.title);
+    $('.workshop-desc').text(workshop.desc);
+    $('.workshop-fee').text(workshop.fee);
+    $('.workshop-by').text(workshop.by);
+    $('.workshop-member').text(workshop.member);
+
+    $(".j-container").append($('.j-container-temp').html());
+    printPrompt();
+
+}
 function hid($element) {
   $element.css({
     opacity: '0',
@@ -272,15 +288,14 @@ function manipulateCmd(cmdSeq){
 
 /* manipulate cmd -- Ends*/
 
-// var workshop;
-// workshop.title = 'hello';
-// workshop.desc = "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur sequi nobis soluta dolores, deleniti reprehenderit assumenda delectus, non recusandae eius? Vero veritatis laborum eaque eos quia inventore ipsum voluptate veniam."
-// workshop.time = '12-15-16';
-/*workshop {
-  title: 'hello',
-  desc: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officiis, quod quos laboriosam nisi fuga aspernatur voluptates, explicabo delectus, odio in saepe reiciendis temporibus, itaque rerum error sequi mollitia nobis doloribus.',
-  time: '16-01-2016'
+var workshop = {
+  title: 'Hellow World',
+  desc: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus iusto odio aliquam minima commodi, officia accusantium temporibus, laudantium natus necessitatibus dolorum illo id ipsum, aperiam. Et dolorem corporis sapiente quaerat!',
+  fee: '600',
+  url: '###',
+  by: 'Microsoft',
+  time: '09:30am',
+  date: '27-02-2015',
+  member: 'Individual Only'
 
-}*/
-
-
+}
