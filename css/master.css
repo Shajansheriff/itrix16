@@ -225,6 +225,23 @@ p {
 }
 
 
+
+.search-results{
+  width: 30%;
+  padding-right: 30px;
+}
+
+
+
+input[type="text"], input[type="password"] {
+  border: none;
+  background-color: #000;
+  outline: none;
+  color: #FFF;
+  width: 70%;
+  height: 30px;
+  letter-spacing: 0.9px;
+}
 /* jash End */
 
 
@@ -232,7 +249,7 @@ p {
 
 /* workshop temp starts*/
 
-.workshop {
+.workshop .event {
   text-align: left;
   vertical-align: text-top; 
 }
@@ -240,12 +257,12 @@ p {
 .workshop tr  {
    border: 1px #ffffff dashed; 
 }
-.workshop tr {
+.workshop .event tr {
   margin-bottom: 20px !important;
   padding: 20px;
 }
 
-.workshop td {
+.workshop, .event td {
   padding: 10px;
 }
 /* workshop temp ends */
